@@ -1,11 +1,17 @@
 import React from 'react'
+import MainComponent from './tools-reducer/main-component'
+import AlertComponent from './tools-reducer/alert-component'
+import { AlertProvider } from './tools-reducer/alert-context'
 
 const UseReducerPage = () => {
 
     return (
-        <div>
-            hello
-        </div>
+        <AlertProvider>
+            <div className={'container pt-5'}>
+                <AlertComponent />
+                <MainComponent />
+            </div>
+        </AlertProvider>
     )
 }
 
