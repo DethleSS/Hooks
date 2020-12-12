@@ -1,14 +1,33 @@
-import React, { useState, useEffect, useRef } from 'react'
+import React, { useState, useMemo, useEffect } from 'react'
+
+function comlexCompute(num) {
+    let i = 0;
+    while (i < 1000000000) i++
+    return num * 2
+}
 
 const UseMemoPage = () => {
     const [number, setNumber] = useState(42)
+    const [colored, setColored] = useState(false)
 
-    
+    const style = useMemo(() => ({
+            color: colored ? 'red' : 'blue'
+    }), [colored])
+
+    const computed = useMemo(() => {
+        return comlexCompute(number)
+    }, [number])
+
+    useEffect(() => {
+        console.log('styleChange')
+    }, [style])
+
     return (
         <div>
-            <h1>Computed property: {number}</h1>
-            <button className="btn btn-success m-2" onClick={(prev) => setNumber(prev => prev + 1)}>Add</button>
-            <button className="btn btn-danger" onClick={(prev) => setNumber(prev => prev - 1)}>drop</button>
+            <h1 style={style}>Computed property: {computed}</h1>
+            <button className="btn btn-success m-2" onClick={() => setNumber(prev => prev + 1)}>Add</button>
+            <button className="btn btn-danger m-2" onClick={() => setNumber(prev => prev - 1)}>drop</button>
+            <button className="btn btn-warning" onClick={() => setColored(prev => !prev)}>ChangeColorHeader</button>
         </div>
     )
 }
